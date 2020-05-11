@@ -13,12 +13,13 @@ class PasswordGeneratorTest extends OverrideTestCase
      */
     public static $opensslExists = true;
     public static $randomIntExists = true;
-
+    public static $mbStrSplitExists = true;
 
     protected function setUp(): void
     {
         self::$opensslExists = true;
         self::$randomIntExists = true;
+        self::$mbStrSplitExists = true;
     }
 
     public function testInitialize()
@@ -147,8 +148,27 @@ class PasswordGeneratorTest extends OverrideTestCase
         $this->assertEquals($expected2, $actual2);
     }
 
-    public function testSetSymbols()
+    public function testSetSymbolsWhenmbStrSplitUsed()
     {
+        self::$mbStrSplitExists = true;
+        $expected = '!"#';
+
+        $obj = new MockPasswordGenerator();
+        $obj->setSymbols($expected);
+        $actual = $obj->getSymbolsFacade();
+
+        $this->assertEquals($expected, $actual);
+
+        $expected2 = '!@#$%^&*()こんにちわ';
+        $obj->setSymbols($expected2);
+        $actual2 = $obj->getSymbolsFacade();
+
+        $this->assertEquals($expected2, $actual2);
+    }
+
+    public function testSetSymbolsWhenStrSplitUsed()
+    {
+        self::$mbStrSplitExists = false;
         $expected = '!"#';
 
         $obj = new MockPasswordGenerator();
