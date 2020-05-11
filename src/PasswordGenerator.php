@@ -99,7 +99,7 @@ class PasswordGenerator
         };
 
         $keySpaceLength = mb_strlen($this->keySpace, self::ENCODING);
-        $keySpaceArray = mb_str_split($this->keySpace, 1, self::ENCODING);
+        $keySpaceArray = $this->strSplit($this->keySpace);
         $password = '';
 
         for ($index = 0; $index < $this->length; $index++) {
@@ -187,7 +187,7 @@ class PasswordGenerator
      */
     public function setSymbols(string $symbols = '!"#$%&\'()*+,-./:;<=>?@[\]^_`{|}~')
     {
-        $original = array_unique(mb_str_split($symbols, 1, self::ENCODING));
+        $original = array_unique($this->strSplit($symbols));
         $symbolSpace = [];
 
         foreach ($original as $c) {
@@ -229,6 +229,20 @@ class PasswordGenerator
         if (!function_exists("openssl_random_pseudo_bytes")) {
             throw new NotImplementException('openssl_random_pseudo_bytes is not exists');
         }
+    }
+
+    /**
+     * Check function exists
+     * 
+     * @throws NotImplementException As it is not exists both 'random_int' and 'openssl_random_pseudo_bytes' function
+     */
+    protected function strSplit(string $str, $length = 1)
+    {
+        if (function_exists("mb_str_split")) {
+            return mb_str_split($str, $length, self::ENCODING);
+        }
+
+        return preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY);
     }
 
     /**
