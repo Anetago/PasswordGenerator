@@ -1,0 +1,32 @@
+{
+    "name": "anetago/gen-passwd",
+    "description": "Secure password generator",
+    "type": "library",
+    "license": "BSE License",
+    "authors": [
+        {
+            "name": "Developer",
+            "email": "developer@example.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^6.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Anetago\\Web\\SecurePasswordGenerator\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Anetago\\Web\\SecurePasswordGenerator\\Tests\\": "tests"
+        }
+    },
+    "config": {
+        "platform": {
+            "php": "7.0"
+        }
+    }
+}
