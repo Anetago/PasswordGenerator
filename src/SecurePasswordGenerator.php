@@ -20,6 +20,12 @@ class SecurePasswordGenerator
     const VERSION = '1.0.0';
 
     /**
+     * multibyte convert
+     * @var string
+     */
+    const ENCODING = "UTF-8";
+
+    /**
      * Length
      * @var int 
      */
@@ -79,7 +85,7 @@ class SecurePasswordGenerator
     public function __construct()
     {
         $this->checkFunction();
-        $this->preapre();
+        $this->prepare();
     }
 
     /**
@@ -90,16 +96,16 @@ class SecurePasswordGenerator
         $func = function ($useRamdomInt, $length) {
             return ($useRamdomInt)
                 ? random_int(0, $length)
-                : openssl_random_pseudo_bytes($length);
+                : (hexdec(bin2hex(openssl_random_pseudo_bytes(4))) % $length);
         };
 
-        $keySpaceLength = mb_strlen($this->keySpace, 'UTF-8');
-        $keySpaceArray = mb_str_split($this->keySpace, 1, 'UTF-8');
+        $keySpaceLength = mb_strlen($this->keySpace, self::ENCODING);
+        $keySpaceArray = mb_str_split($this->keySpace, 1, self::ENCODING);
         $password = '';
 
         for ($index = 0; $index < $this->length; $index++) {
-            $i = $func($this->use_random_int, $keySpaceLength) - 1;
-            $password .=  $keySpaceArray[$i];
+            $i = ($func($this->use_random_int, $keySpaceLength) ?: 1) - 1;
+            $password .= $keySpaceArray[$i];
         }
 
         return $password;
@@ -125,7 +131,7 @@ class SecurePasswordGenerator
         }
 
         $this->length = $length;
-        $this->preapre();
+        $this->prepare();
     }
 
     /**
@@ -135,7 +141,7 @@ class SecurePasswordGenerator
     public function useNumeric(bool $useNumeric)
     {
         $this->useNumeric = $useNumeric;
-        $this->preapre();
+        $this->prepare();
 
         return $this;
     }
@@ -147,7 +153,7 @@ class SecurePasswordGenerator
     public function useLowerAlphabet(bool $useLowerAlphabet)
     {
         $this->useLowerAlphabet = $useLowerAlphabet;
-        $this->preapre();
+        $this->prepare();
 
         return $this;
     }
@@ -159,7 +165,19 @@ class SecurePasswordGenerator
     public function useUpperAlphabet(bool $useUpperAlphabet)
     {
         $this->useUpperAlphabet = $useUpperAlphabet;
-        $this->preapre();
+        $this->prepare();
+
+        return $this;
+    }
+
+    /**
+     * Enable or disable upper alphabet characters
+     * @return this
+     */
+    public function useSymbols(bool $useSymbols)
+    {
+        $this->useSymbols = $useSymbols;
+        $this->prepare();
 
         return $this;
     }
@@ -168,35 +186,33 @@ class SecurePasswordGenerator
      * Sets Symbols 
      * @param string $symbols 
      */
-    protected function setSymbols(string $symbols = '!"#$%&\'()*+,-./:;<=>?@[\]^_`{|}~')
+    public function setSymbols(string $symbols = '!"#$%&\'()*+,-./:;<=>?@[\]^_`{|}~')
     {
-        $original = array_unique(str_split($symbols));
-
+        $original = array_unique(mb_str_split($symbols, 1, self::ENCODING));
         $symbolSpace = [];
 
         foreach ($original as $c) {
-            $hexVakue = bin2hex($c);
+            $hexValue = hexdec(bin2hex($c));
 
             // 0 to 9
-            if ($hexVakue >= 0x30 && $hexVakue <= 0x39) {
+            if ($hexValue >= 0x30 && $hexValue <= 0x39) {
                 continue;
             }
 
             // A to Z
-            if ($hexVakue >= 0x41 && $hexVakue <= 0x5a) {
+            if ($hexValue >= 0x41 && $hexValue <= 0x5a) {
                 continue;
             }
 
             // a to z
-            if ($hexVakue >= 0x61 && $hexVakue <= 0x7a) {
+            if ($hexValue >= 0x61 && $hexValue <= 0x7a) {
                 continue;
             }
 
-            $symbolSpace[] = hex2bin($hexVakue);
+            $symbolSpace[] = hex2bin(dechex($hexValue));
         }
 
-
-        $this->symbols = $original;
+        $this->symbols = implode($symbolSpace);
     }
 
     /**
@@ -219,7 +235,7 @@ class SecurePasswordGenerator
     /**
      * Prepare kye space
      */
-    protected function preapre()
+    protected function prepare()
     {
         $this->prepareKeySpace();
     }
