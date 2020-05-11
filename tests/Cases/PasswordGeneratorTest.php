@@ -15,7 +15,7 @@ class PasswordGeneratorTest extends OverrideTestCase
     public static $randomIntExists = true;
     public static $mbStrSplitExists = true;
 
-    protected function setUp(): void
+    protected function setUp()
     {
         self::$opensslExists = true;
         self::$randomIntExists = true;
