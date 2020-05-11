@@ -1,12 +1,12 @@
 <?php
 
-namespace Anetago\Web\SecurePasswordGenerator\Tests\Cases;
+namespace Anetago\Web\PasswordGenerator\Tests\Cases;
 
-use Anetago\Web\SecurePasswordGenerator\Exception\NotImplementException;
-use Anetago\Web\SecurePasswordGenerator\Tests\OverrideTestCase;
+use Anetago\Web\PasswordGenerator\Exception\NotImplementException;
+use Anetago\Web\PasswordGenerator\Tests\OverrideTestCase;
 use InvalidArgumentException;
 
-class SecurePasswordGeneratorTest extends OverrideTestCase
+class PasswordGeneratorTest extends OverrideTestCase
 {
     /**
      * 
@@ -23,7 +23,7 @@ class SecurePasswordGeneratorTest extends OverrideTestCase
 
     public function testInitialize()
     {
-        $obj = new MockSecurePasswordGenerator();
+        $obj = new MockPasswordGenerator();
         $this->assertTrue($obj->get_use_random_int());
     }
 
@@ -33,13 +33,13 @@ class SecurePasswordGeneratorTest extends OverrideTestCase
         self::$opensslExists = false;
         $this->expectException(NotImplementException::class);
 
-        $obj = new MockSecurePasswordGenerator(false);
+        $obj = new MockPasswordGenerator(false);
         $obj->checkFunctionFacade();
     }
 
     public function testGetLength()
     {
-        $obj = new MockSecurePasswordGenerator();
+        $obj = new MockPasswordGenerator();
         $expected = 12;
         $actual = $obj->getLength();
 
@@ -53,7 +53,7 @@ class SecurePasswordGeneratorTest extends OverrideTestCase
 
     public function testSetLength()
     {
-        $obj = new MockSecurePasswordGenerator();
+        $obj = new MockPasswordGenerator();
         for ($expected = 1; $expected <= 128; $expected++) {
             $obj->setLength($expected);
             $actual = $obj->getLength();
@@ -66,7 +66,7 @@ class SecurePasswordGeneratorTest extends OverrideTestCase
         $threshold = 0;
 
         $this->expectException(InvalidArgumentException::class);
-        $obj = new MockSecurePasswordGenerator();
+        $obj = new MockPasswordGenerator();
         $obj->setLength($threshold);
     }
 
@@ -75,7 +75,7 @@ class SecurePasswordGeneratorTest extends OverrideTestCase
         $threshold = 129;
 
         $this->expectException(InvalidArgumentException::class);
-        $obj = new MockSecurePasswordGenerator();
+        $obj = new MockPasswordGenerator();
         $obj->setLength($threshold);
     }
 
@@ -83,7 +83,7 @@ class SecurePasswordGeneratorTest extends OverrideTestCase
     {
         $expected = false;
 
-        $obj = new MockSecurePasswordGenerator();
+        $obj = new MockPasswordGenerator();
         $obj->useNumeric($expected);
         $actual = $obj->getUseNumeric();
 
@@ -100,7 +100,7 @@ class SecurePasswordGeneratorTest extends OverrideTestCase
     {
         $expected = false;
 
-        $obj = new MockSecurePasswordGenerator();
+        $obj = new MockPasswordGenerator();
         $obj->useLowerAlphabet($expected);
         $actual = $obj->getUseLowerAlphabet();
 
@@ -117,7 +117,7 @@ class SecurePasswordGeneratorTest extends OverrideTestCase
     {
         $expected = false;
 
-        $obj = new MockSecurePasswordGenerator();
+        $obj = new MockPasswordGenerator();
         $obj->useUpperAlphabet($expected);
         $actual = $obj->getUseUpperAlphabet();
 
@@ -134,7 +134,7 @@ class SecurePasswordGeneratorTest extends OverrideTestCase
     {
         $expected = false;
 
-        $obj = new MockSecurePasswordGenerator();
+        $obj = new MockPasswordGenerator();
         $obj->useSymbols($expected);
         $actual = $obj->getUseSymbols();
 
@@ -151,7 +151,7 @@ class SecurePasswordGeneratorTest extends OverrideTestCase
     {
         $expected = '!"#';
 
-        $obj = new MockSecurePasswordGenerator();
+        $obj = new MockPasswordGenerator();
         $obj->setSymbols($expected);
         $actual = $obj->getSymbolsFacade();
 
@@ -167,7 +167,7 @@ class SecurePasswordGeneratorTest extends OverrideTestCase
     public function testSetSymbolsDuplicatedChacters()
     {
         $expected = '!"#';
-        $obj = new MockSecurePasswordGenerator();
+        $obj = new MockPasswordGenerator();
         $obj->setSymbols($expected . $expected);
         $actual = $obj->getSymbolsFacade();
 
@@ -184,7 +184,7 @@ class SecurePasswordGeneratorTest extends OverrideTestCase
     {
         $expected = '!"#';
 
-        $obj = new MockSecurePasswordGenerator();
+        $obj = new MockPasswordGenerator();
         $obj->setSymbols($expected . 'abcxyzABCXYZ01289');
         $actual = $obj->getSymbolsFacade();
 
@@ -203,7 +203,7 @@ class SecurePasswordGeneratorTest extends OverrideTestCase
     {
         $this->prepareDepencency();
 
-        $obj = new MockSecurePasswordGenerator(false);
+        $obj = new MockPasswordGenerator(false);
         $obj->useNumeric(false);
         $obj->useLowerAlphabet(false);
         $obj->useUpperAlphabet(false);
@@ -221,7 +221,7 @@ class SecurePasswordGeneratorTest extends OverrideTestCase
     {
         $this->prepareDepencency();
 
-        $obj = new MockSecurePasswordGenerator(false);
+        $obj = new MockPasswordGenerator(false);
         $obj->useNumeric(true);
         $obj->useLowerAlphabet(false);
         $obj->useUpperAlphabet(false);
@@ -239,7 +239,7 @@ class SecurePasswordGeneratorTest extends OverrideTestCase
     {
         $this->prepareDepencency();
 
-        $obj = new MockSecurePasswordGenerator(false);
+        $obj = new MockPasswordGenerator(false);
         $obj->useNumeric(false);
         $obj->useLowerAlphabet(true);
         $obj->useUpperAlphabet(false);
@@ -257,7 +257,7 @@ class SecurePasswordGeneratorTest extends OverrideTestCase
     {
         $this->prepareDepencency();
 
-        $obj = new MockSecurePasswordGenerator(false);
+        $obj = new MockPasswordGenerator(false);
         $obj->useNumeric(false);
         $obj->useLowerAlphabet(false);
         $obj->useUpperAlphabet(true);
@@ -276,7 +276,7 @@ class SecurePasswordGeneratorTest extends OverrideTestCase
     {
         $this->prepareDepencency();
 
-        $obj = new MockSecurePasswordGenerator(false);
+        $obj = new MockPasswordGenerator(false);
         $obj->useNumeric(false);
         $obj->useLowerAlphabet(false);
         $obj->useUpperAlphabet(false);
@@ -294,7 +294,7 @@ class SecurePasswordGeneratorTest extends OverrideTestCase
     {
         $this->prepareDepencency();
 
-        $obj = new MockSecurePasswordGenerator(false);
+        $obj = new MockPasswordGenerator(false);
         $obj->useNumeric(true);
         $obj->useLowerAlphabet(true);
         $obj->useUpperAlphabet(true);
@@ -314,7 +314,7 @@ class SecurePasswordGeneratorTest extends OverrideTestCase
         self::$opensslExists = false;
         self::$randomIntExists = true;
 
-        $obj = new MockSecurePasswordGenerator();
+        $obj = new MockPasswordGenerator();
         $password = $obj->generate();
 
         $expectLength = $obj->getLength();
@@ -330,7 +330,7 @@ class SecurePasswordGeneratorTest extends OverrideTestCase
         self::$opensslExists = true;
         self::$randomIntExists = false;
 
-        $obj = new MockSecurePasswordGenerator();
+        $obj = new MockPasswordGenerator();
         $password = $obj->generate();
 
         $expectLength = $obj->getLength();

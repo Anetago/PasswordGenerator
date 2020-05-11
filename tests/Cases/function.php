@@ -1,8 +1,8 @@
 <?php
 
-namespace Anetago\Web\SecurePasswordGenerator;
+namespace Anetago\Web\PasswordGenerator;
 
-use Anetago\Web\SecurePasswordGenerator\Tests\Cases\SecurePasswordGeneratorTest;
+use Anetago\Web\PasswordGenerator\Tests\Cases\PasswordGeneratorTest;
 
 /**
  * Override function_exists
@@ -10,10 +10,10 @@ use Anetago\Web\SecurePasswordGenerator\Tests\Cases\SecurePasswordGeneratorTest;
 function function_exists($function)
 {
     if ($function === 'random_int') {
-        return SecurePasswordGeneratorTest::$randomIntExists;
+        return PasswordGeneratorTest::$randomIntExists;
     }
     if ($function === 'openssl_random_pseudo_bytes') {
-        return SecurePasswordGeneratorTest::$opensslExists;
+        return PasswordGeneratorTest::$opensslExists;
     }
     return \function_exists($function);
 }

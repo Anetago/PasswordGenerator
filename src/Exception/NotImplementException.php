@@ -1,6 +1,6 @@
 <?php
 
-namespace Anetago\Web\SecurePasswordGenerator\Exception;
+namespace Anetago\Web\PasswordGenerator\Exception;
 
 use RuntimeException;
 

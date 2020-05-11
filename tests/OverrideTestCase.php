@@ -1,6 +1,6 @@
 <?php
 
-namespace Anetago\Web\SecurePasswordGenerator\Tests;
+namespace Anetago\Web\PasswordGenerator\Tests;
 
 /**
  * Overrides PHPUnit Testcase object

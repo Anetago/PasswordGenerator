@@ -1,10 +1,10 @@
 <?php
 
-namespace Anetago\Web\SecurePasswordGenerator\Tests\Cases;
+namespace Anetago\Web\PasswordGenerator\Tests\Cases;
 
-use Anetago\Web\SecurePasswordGenerator\SecurePasswordGenerator;
+use Anetago\Web\PasswordGenerator\PasswordGenerator;
 
-final class MockSecurePasswordGenerator extends SecurePasswordGenerator
+final class MockPasswordGenerator extends PasswordGenerator
 {
 
     /**

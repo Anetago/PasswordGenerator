@@ -1,9 +1,8 @@
 <?php
 
-namespace Anetago\Web\SecurePasswordGenerator;
+namespace Anetago\Web\PasswordGenerator;
 
-use Anetago\Web\SecurePasswordGenerator\Exception\NotImplementException;
-use Exception;
+use Anetago\Web\PasswordGenerator\Exception\NotImplementException;
 use InvalidArgumentException;
 
 /**
@@ -11,7 +10,7 @@ use InvalidArgumentException;
  * @since 1.0.0
  * @license BSD 3-Clause Lisence
  */
-class SecurePasswordGenerator
+class PasswordGenerator
 {
     /**
      * Version
