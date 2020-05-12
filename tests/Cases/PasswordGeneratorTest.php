@@ -24,6 +24,13 @@ class PasswordGeneratorTest extends OverrideTestCase
 
     public function testInitialize()
     {
+        if (\function_exists("mb_str_split")) {
+            self::$mbStrSplitExists = true;
+        } else {
+            self::$mbStrSplitExists = false;
+            $this->expectException(NotTestImplementException::class);
+        }
+
         $obj = new MockPasswordGenerator();
         $this->assertTrue($obj->get_use_random_int());
     }
@@ -148,14 +155,13 @@ class PasswordGeneratorTest extends OverrideTestCase
         $this->assertEquals($expected2, $actual2);
     }
 
-    public function testSetSymbolsWhenmbStrSplitUsed()
+    public function testSetSymbolsWhenMbStrSplitUsed()
     {
-        if (!\function_exists("mb_str_split")) {
-            $this->assertFalse(\function_exists("mb_str_split"));
-            return;
-        }
-
         self::$mbStrSplitExists = true;
+
+        if (!\function_exists("mb_str_split")) {
+            $this->expectException(NotTestImplementException::class);
+        }
 
         $expected = '!"#';
 
