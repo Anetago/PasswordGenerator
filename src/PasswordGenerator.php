@@ -70,7 +70,7 @@ class PasswordGenerator
      * To get rid of the similar-looking characters (e.g  q (upper to 'Q') and 9 (numeric nine)) 
      * @var bool
      */
-    protected $isRemovedSimilarCharacters = false;
+    protected $useTrimSimilarLooking = false;
 
     /**
      * 
@@ -170,6 +170,18 @@ class PasswordGenerator
     }
 
     /**
+     * Enable or disable to trim similar-looking characters
+     * @return this
+     */
+    public function useTrimSimilarLooking(bool $useTrimSimilarLooking)
+    {
+        $this->useTrimSimilarLooking = $useTrimSimilarLooking;
+        $this->prepare();
+
+        return $this;
+    }
+
+    /**
      * Enable or disable upper alphabet characters
      * @return this
      */
@@ -251,6 +263,7 @@ class PasswordGenerator
     protected function prepare()
     {
         $this->prepareKeySpace();
+        $this->trimSimilarLooking();
     }
 
     /**
@@ -276,7 +289,30 @@ class PasswordGenerator
             $this->keySpace .= $this->symbols;
         }
     }
-}
-error_reporting(E_ALL | E_STRICT);
 
-mb_str_split("",1,'UTF-8');
+    /**
+     * Trim similar looking
+     * @return void
+     */
+    protected function trimSimilarLooking()
+    {
+        if (!$this->useTrimSimilarLooking) {
+            return;
+        }
+
+        $similarLookingList = [
+            '0', 'o', 'O', '1',
+            'I', 'l', '6', 'b',
+            '9', 'g', 'q'
+        ];
+
+        $excludedAmbigunousSymbols = $this->strSplit('"\'(),.:;[]{}`|');
+
+        foreach ($similarLookingList as $row) {
+            $this->keySpace = str_replace($row, '', $this->keySpace);
+        }
+        foreach ($excludedAmbigunousSymbols as $row) {
+            $this->keySpace = str_replace($row, '', $this->keySpace);
+        }
+    }
+}

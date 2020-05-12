@@ -2,7 +2,7 @@
     "name": "anetago/gen-passwd",
     "description": "Secure password generator",
     "type": "library",
-    "license": "BSE License",
+    "license": "BSD License",
     "authors": [
         {
             "name": "tkn08",
