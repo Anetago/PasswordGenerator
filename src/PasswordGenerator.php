@@ -239,10 +239,10 @@ class PasswordGenerator
     protected function strSplit(string $str, $length = 1)
     {
         if (function_exists("mb_str_split")) {
-            return mb_str_split($str, $length, self::ENCODING);
+            return \mb_str_split($str, $length, self::ENCODING);
         }
 
-        return preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY);
+        return \preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY);
     }
 
     /**
@@ -277,3 +277,4 @@ class PasswordGenerator
         }
     }
 }
+
