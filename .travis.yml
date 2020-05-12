@@ -10,7 +10,7 @@ before_script:
 
 script:
   - composer test:run
-  - ./vendor/bin/phpunit --coverage-clover=coverage.xml
+  - ./vendor/bin/phpunit --configuration ./tests/phpunit.xml --coverage-clover=coverage.xml
 
 after_success:
     - bash <(curl -s https://codecov.io/bash)
