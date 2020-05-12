@@ -19,7 +19,7 @@ class PasswordGeneratorTest extends OverrideTestCase
     {
         self::$opensslExists = true;
         self::$randomIntExists = true;
-        self::$mbStrSplitExists = true;
+        self::$mbStrSplitExists = \function_exists("mb_str_split");
     }
 
     public function testInitialize()
@@ -150,7 +150,13 @@ class PasswordGeneratorTest extends OverrideTestCase
 
     public function testSetSymbolsWhenmbStrSplitUsed()
     {
+        if (!\function_exists("mb_str_split")) {
+            $this->assertFalse(\function_exists("mb_str_split"));
+            return;
+        }
+
         self::$mbStrSplitExists = true;
+
         $expected = '!"#';
 
         $obj = new MockPasswordGenerator();
