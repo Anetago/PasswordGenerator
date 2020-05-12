@@ -24,13 +24,6 @@ class PasswordGeneratorTest extends OverrideTestCase
 
     public function testInitialize()
     {
-        if (\function_exists("mb_str_split")) {
-            self::$mbStrSplitExists = true;
-        } else {
-            self::$mbStrSplitExists = false;
-            $this->expectException(NotTestImplementException::class);
-        }
-
         $obj = new MockPasswordGenerator();
         $this->assertTrue($obj->get_use_random_int());
     }
@@ -395,6 +388,8 @@ class PasswordGeneratorTest extends OverrideTestCase
 
     public function testTrimSimilarLookingCheckOnlyToNumeric()
     {
+        self::$mbStrSplitExists = false;
+
         $obj = new MockPasswordGenerator(false);
         $obj->useNumeric(true);
         $obj->useLowerAlphabet(false);
@@ -409,6 +404,8 @@ class PasswordGeneratorTest extends OverrideTestCase
 
     public function testTrimSimilarLookingCheckOnlyToAlphabet()
     {
+        self::$mbStrSplitExists = false;
+
         $obj = new MockPasswordGenerator(false);
         $obj->useNumeric(false);
         $obj->useLowerAlphabet(true);
@@ -423,6 +420,8 @@ class PasswordGeneratorTest extends OverrideTestCase
 
     public function testTrimSimilarLookingCheckOnlyToSymbol()
     {
+        self::$mbStrSplitExists = false;
+
         $obj = new MockPasswordGenerator(false);
         $obj->useNumeric(false);
         $obj->useLowerAlphabet(false);
@@ -437,6 +436,8 @@ class PasswordGeneratorTest extends OverrideTestCase
 
     public function testTrimSimilarLookingAll()
     {
+        self::$mbStrSplitExists = false;
+
         $obj = new MockPasswordGenerator(false);
         $obj->useNumeric(true);
         $obj->useLowerAlphabet(true);
