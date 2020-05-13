@@ -36,16 +36,16 @@ You will be able to set up to detailed settings.
 You can be arbitrary length between 1 and 128 characters. By default, password length sets **12 character**.
 
 #### ```useNumeric(bool)```
-As you are not output some numeric like `012345678`, you turn 'false'.
+As you don't want to output a number like `012345678`, you turn 'false'.
 
 #### ```useLowerAlphabet(bool)```
-As you are not output some numeric like `abcdefghijklmnopqrstuvwxyz`, you turn `false`.
+As you don't want to output lower alphabet like `abcdefghijklmnopqrstuvwxyz`, you turn `false`.
 
 #### ```useUpperAlphabet(bool)```
-As you are not output some numeric like `ABCDEFGHIJKLMNOPQRSTUVWXYZ`, you turn `false`.
+As you don't want to output upper alphabet like `ABCDEFGHIJKLMNOPQRSTUVWXYZ`, you turn `false`.
 
 #### ```useSymbols(bool)```
-As you are not output some numeric like `!"#$%&\'()*+,-./:;<=>?@[\]^_``{\|}~`, you turn `false`.
+As you don't want to output symbols `!"#$%&\'()*+,-./:;<=>?@[\]^_``{\|}~`, you turn `false`.
 
 
 Examples in detailed settings
