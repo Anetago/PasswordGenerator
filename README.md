@@ -66,4 +66,4 @@ print_r($generator->generate());
 ```
 
 ## License
-BSD 3-Clause License
+Apache License
